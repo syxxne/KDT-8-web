@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,200;1,100&display=swap"
+      rel="stylesheet"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .overflow {
+        width: 100px;
+        height: 100px;
+        background-color: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <p>설문조사</p>
+    <br />
+    이름<input type="text" />
+    <br />
+    이메일<input type="text" placeholder="love@example.com" />
+    <br />
+    <p>나이</p>
+    <input type="radio" name="age" value="10대" checked /><span>10대</span>
+    <input type="radio" name="age" value="20대" /><span>20대</span>
+    <input type="radio" name="age" value="30대" /><span>30대</span>
+    <input type="radio" name="age" value="40대" /><span>40대</span>
+    <input type="radio" name="age" value="50대" /><span>50대</span>
+    <input type="radio" name="age" value="60대 이상" /><span>60대 이상</span>
+    <br />
+    <p>원하는 강의(복수응답가능합니다.)</p>
+    <input type="checkbox" name="lang" value="html" checked /><span>html</span>
+    <input type="checkbox" name="lang" value="javascript" /><span
+      >javascript</span
+    >
+    <input type="checkbox" name="lang" value="css" /><span>css</span>
+    <br />
+    <br />
+    <textarea
+      name="comment"
+      cols="50"
+      rows="10"
+      placeholder="하고 싶은 말을 써주세요:)"
+    ></textarea>
+    <button>제출</button>
+  </body>
+</html>
