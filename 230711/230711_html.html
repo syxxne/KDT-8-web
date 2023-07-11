@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      let result = 0;
+      let n = Number(prompt("숫자를 입력하세요."));
+
+      for (let i = 0; i <= n; i++) {
+        if (i % 2 == 0 || i % 3 == 0) {
+          result += i;
+        }
+      }
+
+      console.log(result);
+
+      let j = 0;
+      let result2 = 0;
+      while (j <= n) {
+        if (j % 2 == 0 || j % 3 == 0) {
+          result2 += j;
+        }
+        j++;
+      }
+
+      console.log(result2);
+    </script>
+  </head>
+  <body></body>
+</html>
