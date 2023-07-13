@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    방명록입니다.
+    <br />
+    <br />
+    작성자 <input type="text" id="writer" />
+    <br />
+    내용 <input type="text" id="content" />
+    <br />
+    <br />
+    <button onclick="create()">작성</button>
+    <br />
+    <br />
+    <table id="post_list" border="1">
+      <tr>
+        <th>번호</th>
+        <th>작성자</th>
+        <th>내용</th>
+        <th>작성일</th>
+      </tr>
+    </table>
+    <script>
+      var count = 0;
+
+      function create() {
+        var td1 = document.createElement("td");
+        td1.innerHTML = ++count;
+        //document.querySelectorAll("tr").length;
+
+        var td2 = document.createElement("td");
+        td2.innerHTML = document.getElementById("writer").value;
+
+        var td3 = document.createElement("td");
+        td3.innerHTML = document.getElementById("content").value;
+
+        var td4 = document.createElement("td");
+        let date = new Date();
+        td4.innerHTML =
+          date.getFullYear() +
+          "-" +
+          (date.getMonth() + 1) +
+          "-" +
+          date.getDate() +
+          " " +
+          date.getHours() +
+          ":" +
+          date.getMinutes();
+
+        var trtag = document.createElement("tr");
+        trtag.appendChild(td1);
+        trtag.appendChild(td2);
+        trtag.appendChild(td3);
+        trtag.appendChild(td4);
+
+        document.getElementById("post_list").appendChild(trtag);
+
+        document.getElementById("writer").value = "";
+        document.getElementById("content").value = "";
+      }
+    </script>
+  </body>
+</html>

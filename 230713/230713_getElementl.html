@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .box {
+        border: 1px solid black;
+        width: 100px;
+        height: 100px;
+      }
+      #green {
+        background-color: greenyellow;
+      }
+      #red {
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="box" id="green">1</div>
+      <div class="box" id="red">2</div>
+      <div class="box">3</div>
+      <div class="box">4</div>
+      <div class="box">5</div>
+    </div>
+    <input type="text" name="userName" />
+
+    <script>
+      let dom1 = document.getElementById("green"); //요소를 하나만 가져옴
+      console.log(dom1);
+
+      let dom2 = document.getElementsByClassName("box"); //요소를 배열로 가져옴(HTMLCollection)
+      console.log("dom2 : ", dom2);
+
+      let dom3 = document.getElementsByTagName("div"); //요소를 배열로 가져옴(HTMLCollection)
+      console.log("dom3 : ", dom3);
+
+      let dom4 = document.getElementsByName("green"); //요소를 배열로 가져옴(NodeList)
+      console.log("dom4 : ", dom4);
+
+      let dom5 = document.querySelector("#red");
+      console.log("dom5 : ", dom5);
+
+      let dom6 = document.querySelector("div");
+      console.log("dom6 : ", dom6);
+
+      let dom7 = document.querySelectorAll("div"); //요소를 배열로 가져옴(NodeList)
+      console.log("dom7 : ", dom7);
+    </script>
+  </body>
+</html>
+
+<!--
+    nodelist와 htmlcolleciton 차이
+
+    1.
+    HTMLCollection : <> 요소(태그) 노드만 포함 (텍스트 노드는 자식으로 포함 X)
+    NodeList : 모든 노드들(태그, 텍스트 등)을 포함
+
+    2.
+    HTMLCollection : index, namedItem 함수로 자식 요소 노드(배열)에 접근 가능 
+    NodeList : index 외의 방법으로 자식 요소 노드(배열)에 접근 불가능 (태그를 제외한 텍스트 등도 모두 가져옴 텍스트는 속성을 가질 수 없기 때문에 namedItem으로 접근할 수 없는 게 당연함)
+
+    3.
+    HTMLCollection : 동적, DOM을 다루면서 새로운 요소를 추가했을 때, 추가된 요소도 가져올 수 있음
+    NodeList : 정적, 새로 추가된 요소를 가져올 수 없음(처음 읽었을 때 정해진 요소들만 가져옴)
+
+    4.
+    HTMLCollection[] : 실제 배열 x, 배열과 유사한 객체, forEach를 사용할 수 없음
+    NodeList[] : 실제 배열 o, forEach를 사용할 수 있음
+
+-->

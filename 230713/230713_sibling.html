@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="container">
+      <div class="box" id="green">1</div>
+      previous 테스트
+      <div class="box" id="red">2</div>
+      next 테스트
+      <div class="box">3</div>
+      <div class="box">4</div>
+      <div class="box">5</div>
+    </div>
+    <button onclick="getParent()">getParent</button>
+    <button onclick="pSibling()">previousSibling</button>
+    <button onclick="pESibling()">previousElementSibling</button>
+    <button onclick="nSibling()">nextSibling</button>
+    <button onclick="nESibling()">nextElementSibling</button>
+    <script>
+      let container = document.getElementById("container");
+      let redDiv = document.getElementById("red");
+
+      function getParent() {
+        console.log(container.parentNode);
+        console.log(container.childNodes);
+        console.log(container.children);
+      }
+      function pSibling() {
+        console.log(redDiv.previousSibling); //<> 요소가 아니어도(텍스트와 주석까지) 바로 앞에 위치한 노드 가져옴 ("previous 테스트" 출력, 요소와 요소 사이에는 항상 #text가 존재함 따라서 실제 텍스트가 없어도 #text 출력됨)
+      }
+      function pESibling() {
+        console.log(redDiv.previousElementSibling); //앞에 위치한 <> 요소 노드를 가져옴 ("<div class="box" id="green">1</div>" 출력)
+      }
+      function nSibling() {
+        console.log(redDiv.nextSibling);
+      }
+      function nESibling() {
+        console.log(redDiv.nextElementSibling);
+      }
+    </script>
+  </body>
+</html>
