@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://code.jquery.com/jquery-3.7.0.js"
+      integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"
+      integrity="sha256-xLD7nhI62fcsEZK2/v8LsBcb4lG7dgULkuXoXB/j91c="
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      div {
+        width: 100px;
+        height: 100px;
+      }
+      .css1 {
+        background-color: red;
+      }
+      .css2 {
+        background-color: orange;
+      }
+      .css3 {
+        background-color: yellow;
+      }
+      .css4 {
+        background-color: green;
+      }
+      .css5 {
+        background-color: blue;
+      }
+      .css6 {
+        background-color: navy;
+      }
+      .css7 {
+        background-color: purple;
+      }
+    </style>
+    <script>
+      count = 1;
+      function switchClass() {
+        switch (count) {
+          case 1:
+            $("div").switchClass("css1", "css2");
+            count++;
+            break;
+          case 2:
+            $("div").switchClass("css2", "css3");
+            count++;
+            break;
+          case 3:
+            $("div").switchClass("css3", "css4");
+            count++;
+            break;
+          case 4:
+            $("div").switchClass("css4", "css5");
+            count++;
+            break;
+          case 5:
+            $("div").switchClass("css5", "css6");
+            count++;
+            break;
+          case 6:
+            $("div").switchClass("css6", "css7");
+            count++;
+            break;
+          case 7:
+            $("div").switchClass("css7", "css1");
+            count = 1;
+            break;
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div onclick="switchClass()" class="css1"></div>
+  </body>
+</html>
+
+<!-- 전역변수
+    let cssNum = 1;
+    if (cssNum == 7) {
+        ${"div"}.switchClass(`css${cssNum}`, `css1`);
+        cssNum = 1;
+    } else {
+        ${"div"}.switchClass(`css${cssNum}`, `css${cssNum + 1}`);
+        cssNum++;
+    }
+-->
+
+<!-- 리스트
+    var now = $("div").attr("class");
+    var i = colors.indexOf(now);
+    if (i == colors.length - 1) $("div").switchClass(now, colors[0]);
+    else $("div").switchClass(now, colors[i + 1]);
+-->

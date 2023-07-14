@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script
+      src="https://code.jquery.com/jquery-3.7.0.js"
+      integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+      crossorigin="anonymous"
+    ></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      $(window).ready(function () {
+        $("p").text("asdfsadfsd");
+      });
+    </script>
+  </head>
+  <body>
+    <p></p>
+    <button>button</button>
+    <input />
+    <script>
+      // 로딩 이벤트
+      // 아래 3개의 이벤트가 모두 DOM요소를 불러온 후에 실행
+      // DOM요소를 불러온 후에 실행시키고 싶을 경우 ready(로딩 이벤트) 사용
+      $(window).ready(function () {
+        console.log("로드 완료1");
+      });
+      $(function () {
+        console.log("로드 완료3");
+      });
+      $(document).ready(function () {
+        console.log("로드 완료2");
+      });
+
+      // addEventLister("이벤트명", 콜백함수)
+      // $().on("이벤트명", "콜백함수")
+      // $().on("click")
+      // addEventLister("click")
+      //   $("button").on("click", function () {
+      //     alert("클릭");
+      //   });
+      $("button").click(function () {
+        alert("클릭");
+      });
+      // e는 이벤트 객체
+      // e.currentTarget은 input, input이므로 input.value 가능
+      $("input").keyup(function (e) {
+        console.log(e);
+        console.log(e.key);
+        console.log(e.keyCode);
+        console.log(e.currentTarget);
+        console.log(e.currentTarget.value);
+      });
+      // on 함수를 이용하지 않고 바로 쓸 수 있는 이벤트 함수
+      // click, scroll, mouseover, hover, keyup, keydown
+      // $().on("click", 콜백함수)
+      // $().click(콜백함수)
+    </script>
+  </body>
+</html>
+
+<!--
+    ready : dom을 불러온 이후(요소들이 불러와진 후)에 실행됨
+-->
