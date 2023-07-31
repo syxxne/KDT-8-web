@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // spread 연산자
+      // 객체에서도 이용 가능하나 일반적으로 객체보다는 배열에서 많이 쓰임
+      const a = [1, 2, 3];
+      const b = [4, 5];
+
+      const concat = a.concat(b);
+      console.log(concat);
+
+      const spread = [...a, ...b];
+      console.log(spread);
+
+      const person = {
+        name: "yeon",
+        age: 19,
+      };
+      console.log({ ...person });
+      const c = "hello";
+      console.log(...c);
+      console.log([...c]);
+
+      function get(a, ...rest) {
+        // rest parameter는 항상 맨 뒤에 위치해야 함
+        console.log(a);
+        console.log(rest);
+      }
+
+      function get1(...rest) {
+        console.log(rest);
+      }
+
+      get(10, 20, 30, 40, 50);
+      get1(10, 20, 30, 40, 50);
+
+      // 클래스
+      class Cat {
+        // 생성자
+        constructor(name, age) {
+          // 속성
+          this.name = name;
+          this.age = age;
+        }
+
+        //메서드
+        mew() {
+          console.log("야옹");
+        }
+
+        eat() {
+          console.log("먹이를 먹습니다.");
+        }
+      }
+
+      const cat1 = new Cat("나비", 1);
+      console.log(cat1);
+      cat1.mew();
+    </script>
+  </body>
+</html>
+
+<!--
+    spread는 호출할 때 사용
+    rest는 호출 받을 때 사용
+-->

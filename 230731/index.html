@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 배열
+      const lists = ["apple", "grape"];
+
+      // 기존 방식
+      console.log(lists[0], lists[1]);
+
+      // 배열 구조 분해
+      [item1, item2, item3 = "peach"] = lists;
+      console.log(item1, item2);
+      item1 = "peach";
+      console.log(lists);
+      console.log(item1, item3);
+
+      // 배열을 const로 선언 -> 배열 자체는 바꿀 수 없으나 그 안의 원소 내용은 언제든지 바꿀 수 있음
+
+      // 교환
+      let x = 1,
+        y = 3;
+      [x, y] = [y, x];
+      console.log(x, y);
+
+      // 객체
+      const Person = {
+        name: "yeon",
+        age: 19,
+        gender: "W",
+        friends: ["Alex", "Kevin"],
+        hello: function () {
+          console.log("hello");
+        },
+        "j-1": "America",
+      };
+
+      console.log(Person.name);
+      Person.age = 29;
+      console.log(Person.age);
+      console.log(Person.friends[0]);
+      console.log(Person.hello());
+      console.log(Person["j-1"]); // key에 특수문자 등을 사용할 경우에는 배열식 접근 활용
+      Person.city = "Seoul";
+      console.log(Person);
+
+      // 객체 구조 분해
+      const { name, city, gender, key1 = "Hi" } = Person;
+      console.log(name, city, gender, key1);
+      console.log(Person);
+    </script>
+  </body>
+</html>
+
+<!--
+  객체는 key와 value로 나뉨
+  객체 구조 분해에서 말하는 변수는 객체의 key 값 (const {변수} = 객체)
+  javascript는 함수형 언어. 클래스처럼 사용했을 뿐, 클래스라는 개념이 없었으므로 javascript는 클래스보다 객체가 더 중요함
+
+-->
