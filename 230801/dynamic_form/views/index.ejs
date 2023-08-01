@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <form name="register">
+      <label for="name">이름</label>
+      <input type="text" id="name" required />
+      <br />
+      성별
+      <input type="radio" name="gender" value="남자" id="male" />
+      <label for="male">남자</label>
+      <input type="radio" name="gender" value="여자" id="female" />
+      <label for="female">여자</label>
+      <br />
+      <button type="button" onclick="ajaxGet()">ajax get 제출</button><br />
+      <button type="button" onclick="ajaxPost()">ajax post 제출</button><br />
+      <button type="button" onclick="axiosGet()">ajax get 제출</button><br />
+      <button type="button" onclick="axiosPost()">ajax post 제출</button><br />
+      <button type="button" onclick="fetchGet()">fetch get 제출</button><br />
+      <button type="button" onclick="fetchPost()">fetch post 제출</button><br />
+    </form>
+    <div class="result"></div>
+    <script>
+      const resultBox = document.querySelector(".result");
+      function ajaxGet() {
+        console.log("ajax get");
+
+        // 폼 선택하기
+        const form = document.forms["register"];
+        // console.log(form);
+        // console.log(form.name);
+        // console.log(form.gender);
+        // console.log(form.name.value);
+        // console.log(form.gender.value);
+
+        if (form.name.value === "") {
+          alert("이름을 입력하세요");
+          return; // 오류 처리 이후에는 return 필수! 그렇지 않으면 아래 코드 쭉 실행됨
+        }
+
+        const data = {
+          name: form.name.value,
+          gender: form.gender.value,
+        };
+
+        $.ajax({
+          type: "GET",
+          url: "/ajax",
+          data, // key와 value가 동일할 때에는 생략 가능 (data: data,)
+          success: (res) => {
+            console.log("res", res);
+            resultBox.textContent = `GET /ajax 요청 완료 ${res.name}님은 ${res.gender}이시죠?`;
+            resultBox.style.color = "blue";
+          },
+        });
+      }
+
+      function ajaxPost() {
+        console.log("ajax post");
+
+        const form = document.forms["register"];
+
+        if (form.name.value === "") {
+          alert("이름을 입력하세요");
+          return;
+        }
+
+        const data = {
+          name: form.name.value,
+          gender: form.gender.value,
+        };
+
+        $.ajax({
+          type: "POST",
+          url: "/ajax",
+          data: data,
+          success: (res) => {
+            console.log("res", res);
+            resultBox.textContent = `POST /ajax 요청 완료 ${res.name}님은 ${res.gender}이시죠?`;
+            resultBox.style.color = "red";
+          },
+        });
+      }
+
+      function axiosGet() {
+        console.log("axios get");
+        const form = document.forms["register"];
+        const data = {
+          name: form.name.value,
+          gender: form.gender.value,
+        };
+
+        axios({
+          method: "GET",
+          // url: `/axios?name=${form.name.value}&gender=${form.gender.value}` 도 가능
+          url: "/axios",
+          params: data,
+        }).then((res) => {
+          console.log(res);
+          resultBox.textContent = `GET /axios 요청 완료 ${res.data.name}님은 ${res.data.gender}이시죠?`;
+          resultBox.style.color = "green";
+        });
+      }
+
+      async function axiosPost() {
+        console.log("axios post");
+        const form = document.forms["register"];
+        const data = {
+          name: form.name.value,
+          gender: form.gender.value,
+        };
+
+        const result = await axios({
+          // 비동기 처리를 하지 않으면 pending 상태가 됨
+          // then보다는 async, await를 더 많이 사용
+          method: "POST",
+          url: "/axios",
+          data,
+        });
+
+        resultBox.textContent = `POST /axios 요청 완료! ${result.data.name}님은 ${result.data.gender}이시죠?`;
+        resultBox.style.color = "purple";
+        console.log(result);
+      }
+
+      function fetchGet() {
+        console.log("fetch get");
+        const form = document.forms["register"];
+        const url = `?name=${form.name.value}&gender=${form.gender.value}`;
+
+        fetch(`/fetch${url}`, {
+          method: "GET",
+        })
+          .then((res) => {
+            console.log("res", res);
+            return res.json();
+          })
+          .then((data) => {
+            console.log("data", data);
+            resultBox.textContent = `GET /fetch 요청 완료! ${data.name}님은 ${data.gender}이시죠?`;
+            resultBox.style.color = "limegreen";
+          });
+      }
+
+      function fetchPost() {
+        console.log("fetch post");
+        const form = document.forms["register"];
+        const data = {
+          name: form.name.value,
+          gender: form.gender.value,
+        };
+
+        fetch("/fetch", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+          // JSON.stringify() : JavaScript 객체를 JSON 텍스트로 변환
+          // JSON.parse() : JSON 형식의 텍스트를 JavaScript 객체로 변환
+        })
+          .then((res) => {
+            console.log("res", res);
+            return res.json();
+          })
+          .then((data) => {
+            console.log("data", data);
+            resultBox.textContent = `POST /fetch 요청 완료! ${data.name}님은 ${data.gender}이시죠?`;
+            resultBox.style.color = "hotpink";
+          });
+      }
+    </script>
+  </body>
+</html>
+
+<!--
+    가장 많이 사용하는 것이 axios get, post
+    요즘은 JQuery가 사라지고 있는 추세
+
+    동적 폼을 사용하는 이유 : 비동기 통신을 하기 위해서
+-->

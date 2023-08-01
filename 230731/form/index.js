@@ -10,8 +10,8 @@ app.use(express.json());
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
+// router
 app.get("/", (req, res) => {
-  // res.send("Hello");
   res.render("index3", { title: "POST로 정보 받기" });
 });
 
@@ -53,6 +53,14 @@ app.post("/postForm", (req, res) => {
 //   });
 // });
 
+// server open
 app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}`);
 });
+
+// 새로운 페이지 연결할 때 (router)
+// app.get("/도메인", (req, res) => {
+//   res.render("ejs 파일명");
+// })
+// app.get : get 방식으로 페이지를 보여줌
+// app.post : post 방식으로 정보를 전송

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <form name="signIn">
+      <label for="id">아이디</label>
+      <input type="text" id="id" required />
+      <br />
+      <label for="pw">패스워드</label>
+      <input type="password" id="pw" required />
+      <br />
+      <div class="result"></div>
+      <button type="button" onclick="axiosPost()">로그인</button><br />
+    </form>
+
+    <script>
+      const resultBox = document.querySelector(".result");
+
+      async function axiosPost() {
+        console.log("axios post");
+        const form = document.forms["signIn"];
+        const data = {
+          id: form.id.value,
+          password: form.pw.value,
+        };
+        console.log(data);
+
+        const result = await axios({
+          method: "POST",
+          url: "/axios",
+          data,
+        });
+
+        console.log(result.data);
+
+        if (result.data === "success") {
+          resultBox.textContent = "아이디, 비밀번호가 일치합니다.";
+          resultBox.style.color = "blue";
+        } else {
+          resultBox.textContent = "아이디, 비밀번호가 일치하지 않습니다.";
+          resultBox.style.color = "red";
+        }
+      }
+    </script>
+  </body>
+</html>

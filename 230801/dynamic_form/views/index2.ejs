@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <form name="register">
+      <label for="name">이름</label>
+      <input type="text" id="name" />
+      <br />
+      <fieldset>
+        <legend>성별</legend>
+        <input type="radio" name="gender" value="남자" />
+        <label for="gender">남자</label>
+        <input type="radio" name="gender" value="여자" />
+        <label for="gender">여자</label>
+      </fieldset>
+      <fieldset>
+        <legend>생년월일</legend>
+        <select name="birthYear">
+          <% for(let i = 1970; i <= 2020; i++) { %>
+          <option value="<%= i %>"><%= i %></option>
+          <% } %></select
+        >년
+        <select name="birthMonth">
+          <% for(let i = 1; i <= 12; i++) { %>
+          <option value="<%= i %>"><%= i %></option>
+          <% } %></select
+        >월
+        <select name="birthDay">
+          <% for(let i = 1; i <= 31; i++) { %>
+          <option value="<%= i %>"><%= i %></option>
+          <% } %></select
+        >일
+      </fieldset>
+      <fieldset>
+        <legend>관심사</legend>
+        <input type="checkbox" name="hobby" value="travel" />
+        <label for="hobby">여행</label>
+        <input type="checkbox" name="hobby" value="fashion" />
+        <label for="hobby">패션</label>
+        <input type="checkbox" name="hobby" value="food" />
+        <label for="hobby">음식</label>
+      </fieldset>
+      <br />
+      <button type="button" onclick="axiosGet()">회원가입</button><br />
+    </form>
+    <br />
+    <div class="result"></div>
+    <script>
+      const resultBox = document.querySelector(".result");
+      function axiosGet() {
+        console.log("axios get");
+        const form = document.forms["register"];
+        var hobby_value = "";
+        console.log(form.hobby);
+        $("input:checkbox[name=hobby]").each(function (index) {
+          if ($(this).is(":checked") == true) {
+            console.log($(this).val());
+            hobby_value = $(this).val();
+          }
+        });
+        const data = {
+          name: form.name.value,
+          gender: form.gender.value,
+          birthYear: form.birthYear.value,
+          birthMonth: form.birthMonth.value,
+          birthDay: form.birthDay.value,
+          hobby: hobby_value,
+        };
+
+        axios({
+          method: "GET",
+          // url: `/axios?name=${form.name.value}&gender=${form.gender.value}` 도 가능
+          url: "/axios",
+          params: data,
+        }).then((res) => {
+          console.log(res);
+          resultBox.textContent = `GET /axios 회원가입 완료\n 이름 : ${res.data.name}\n 성별 : ${res.data.gender}\n 생년월일 : ${res.data.birthYear}-${res.data.birthMonth}-${res.data.birthDay}\n 관심사 : ${res.data.hobby}`;
+        });
+      }
+    </script>
+  </body>
+</html>
