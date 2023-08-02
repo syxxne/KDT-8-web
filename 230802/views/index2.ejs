@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <h3>개인 정보</h3>
+    <form
+      action="/uploadPractice"
+      method="post"
+      enctype="multipart/form-data"
+      name="register"
+    >
+      <label for="userId">아이디: </label>
+      <input type="text" id="userId" />
+      <br />
+      <label for="password">비밀번호: </label>
+      <input type="password" id="password" />
+      <br />
+      <label for="name">이름: </label>
+      <input type="text" id="name" />
+      <br />
+      <label for="age">나이: </label>
+      <input type="text" id="age" />
+      <br />
+      <label for="profileImg">프로필 사진: </label>
+      <input type="file" name="profileImg" id="dynamic-file" /><br />
+      <button type="reset">리셋</button>
+      <button type="button" onclick="registerForm()">회원가입</button>
+    </form>
+
+    <script>
+      function registerForm() {
+        console.log("axios");
+        const form = document.forms["register"];
+        const file = document.getElementById("dynamic-file");
+
+        const data = {
+          userId: form.userId.value,
+          password: form.password.value,
+          name: form.name.value,
+          age: form.age.value,
+          profileImg: file.files[0],
+        };
+
+        console.log(data);
+
+        axios({
+          method: "POST",
+          url: "/uploadPractice",
+          data,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }).then((res) => {
+          console.log("res", res);
+        });
+      }
+    </script>
+  </body>
+</html>

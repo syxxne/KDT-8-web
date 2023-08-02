@@ -8,7 +8,7 @@
     <title>Document</title>
   </head>
   <body>
-    <form name="register">
+    <form name="register" id="register">
       <label for="name">이름</label>
       <input type="text" id="name" />
       <br />
@@ -39,11 +39,11 @@
       </fieldset>
       <fieldset>
         <legend>관심사</legend>
-        <input type="checkbox" name="hobby" value="travel" />
+        <input type="checkbox" name="hobby" value="여행" />
         <label for="hobby">여행</label>
-        <input type="checkbox" name="hobby" value="fashion" />
+        <input type="checkbox" name="hobby" value="패션" />
         <label for="hobby">패션</label>
-        <input type="checkbox" name="hobby" value="food" />
+        <input type="checkbox" name="hobby" value="음식" />
         <label for="hobby">음식</label>
       </fieldset>
       <br />
@@ -56,12 +56,14 @@
       function axiosGet() {
         console.log("axios get");
         const form = document.forms["register"];
-        var hobby_value = "";
+        // var hobby_value = "";
+        const hobby = [];
         console.log(form.hobby);
         $("input:checkbox[name=hobby]").each(function (index) {
           if ($(this).is(":checked") == true) {
             console.log($(this).val());
-            hobby_value = $(this).val();
+            // hobby_value = $(this).val();
+            hobby.push($(this).val());
           }
         });
         const data = {
@@ -70,7 +72,8 @@
           birthYear: form.birthYear.value,
           birthMonth: form.birthMonth.value,
           birthDay: form.birthDay.value,
-          hobby: hobby_value,
+          // hobby: hobby_value,
+          hobby,
         };
 
         axios({
@@ -86,3 +89,19 @@
     </script>
   </body>
 </html>
+
+<!--
+  const formId = document.getElementById("register"); 
+  querySelector 사용하기 위해 Id 값을 활용하여 form을 가져옴
+
+  const hobby = [];
+  const checked = formId.querySelectorAll("input[type="checkbox"]:checked");
+
+  checked.forEach(elem => {
+    hobby.push(elem.value);
+  });
+
+  const data = {
+    hobby,
+  }
+-->
