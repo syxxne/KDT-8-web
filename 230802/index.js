@@ -42,7 +42,7 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-// singile
+// single
 app.post("/upload", uploadDetail.single("userfile"), (req, res) => {
   console.log(req.file);
   console.log(req.body);
