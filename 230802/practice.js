@@ -32,6 +32,7 @@ app.post("/uploadPractice", uploadDetail.single("profileImg"), (req, res) => {
   console.log(req.file);
   console.log(req.body);
   res.send({ data: req.body, img: req.file });
+  // res.render("result", { userInfo: req.body, profile: req.file.path, });
 });
 
 app.listen(PORT, () => {
