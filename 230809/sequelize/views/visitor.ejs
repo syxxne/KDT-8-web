@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <form name="visitor">
+      <fieldset>
+        <legend>방명록 등록</legend>
+        <input type="text" id="userName" placeholder="사용자 이름" />
+        <br />
+        <input type="text" id="visitorComment" placeholder="방명록" />
+        <br />
+        <button type="button" id="createButton" onclick="createVisitor()">
+          등록
+        </button>
+      </fieldset>
+    </form>
+    <br />
+    <br />
+    <table id="visitorList" border="1" cellspacing="0">
+      <thead>
+        <tr style="text-align: center; font-weight: bold">
+          <td>ID</td>
+          <td>작성자</td>
+          <td>방명록</td>
+          <td>수정</td>
+          <td>삭제</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (let i = 0; i < data.length; i++) { %>
+        <tr id="tr_<%= data[i].id %>">
+          <td><%= data[i].id %></td>
+          <td><%= data[i].name %></td>
+          <td><%= data[i].comment %></td>
+          <td>
+            <button type="button" onclick="getVisitor('<%= data[i].id %>')">
+              수정
+            </button>
+          </td>
+          <td>
+            <button type="button" onclick="deleteVisitor('<%= data[i].id %>')">
+              삭제
+            </button>
+          </td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+    <script>
+      function createVisitor() {
+        console.log("write");
+        const form = document.forms["visitor"];
+
+        axios({
+          method: "POST",
+          url: "/visitor/write",
+          data: {
+            name: form.userName.value,
+            comment: form.visitorComment.value,
+          },
+        }).then((res) => {
+          const html = `
+                    <tr id=tr_${res.data.id}>
+                        <td>${res.data.id}</td>
+                        <td>${res.data.name}</td>
+                        <td>${res.data.comment}</td>
+                        <td><button type="button" onclick="getVisitor(${res.data.id})">수정</button></td>
+                        <td><button type="button" onclick="deleteVisitor(${res.data.id})">삭제</button></td>
+                    </tr>`;
+          document
+            .getElementById("visitorList")
+            .insertAdjacentHTML("beforeend", html);
+        });
+      }
+
+      function getVisitor(id) {
+        console.log("get");
+
+        axios({
+          method: "GET",
+          url: "/visitor/get",
+          params: {
+            id: id,
+          },
+        }).then((res) => {
+          $("#userName").val(res.data.name);
+          $("#visitorComment").val(res.data.comment);
+
+          document
+            .getElementById("createButton")
+            .setAttribute("onClick", `modifyVisitor(${res.data.id})`);
+        });
+      }
+
+      function modifyVisitor(id) {
+        console.log("modify");
+        console.log(id);
+        const form = document.forms["visitor"];
+
+        axios({
+          method: "PATCH",
+          url: "/visitor/edit",
+          data: {
+            id: id,
+            name: form.userName.value,
+            comment: form.visitorComment.value,
+          },
+        }).then((res) => {
+          console.log(res);
+
+          const tr = document.getElementById(`tr_${id}`);
+          tr.getElementsByTagName("td")[1].innerText = form.userName.value;
+          tr.getElementsByTagName("td")[2].innerText =
+            form.visitorComment.value;
+
+          document
+            .getElementById("createButton")
+            .setAttribute("onClick", "createVisitor()");
+        });
+      }
+
+      function deleteVisitor(id) {
+        console.log("delete");
+
+        axios({
+          method: "DELETE",
+          url: "/visitor/delete",
+          data: {
+            id: id,
+          },
+        }).then((res) => {
+          const tr = document.getElementById(`tr_${id}`);
+          tr.remove();
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,6 +1,5 @@
-const express = require("express");
-// import controller from "../controller/Cuser.js"; 도 가능
-const controller = require("../controller/Cuser");
+import express from "express";
+import * as controller from "../controller/Cuser.js";
 const router = express.Router();
 
 router.get("/", controller.main);
@@ -17,4 +16,4 @@ router.post("/profile/edit", controller.editProfile);
 router.post("/profile/delete", controller.deleteProfile);
 // router.delete("/profile/delete", controller.deleteProfile); 도 가능
 
-module.exports = router;
+export default router;

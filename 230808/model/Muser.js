@@ -39,7 +39,7 @@ exports.viewProfile = (userid, callback) => {
 };
 
 exports.editProfile = (userid, name, pw, callback) => {
-  const sql = `UPDATE user SET name='${name}', pw='${pw}'  WHERE userid='${userid}';`;
+  const sql = `UPDATE user SET name='${name}', pw='${pw}' WHERE userid='${userid}';`;
   conn.query(sql, (err, result) => {
     if (err) throw err;
     callback(result);
