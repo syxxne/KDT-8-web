@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <p id="login_text"></p>
+    </div>
+    <script>
+      (function () {
+        const token = localStorage.getItem("token");
+        console.log("token", token);
+
+        if (token != null) {
+          axios({
+            method: "POST",
+            url: "/verify",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }).then((res) => {
+            console.log(res);
+            console.log(res.data.user.id);
+            document.getElementById(
+              "login_text"
+            ).innerText = `${res.data.user.id}님 환영합니다.`;
+
+            var button = document.createElement("input");
+            button.type = "button";
+            button.value = "로그아웃";
+            button.onclick = function () {
+              localStorage.clear();
+              location.href = "/";
+            };
+
+            var container = document.getElementById("container");
+            container.appendChild(button);
+          });
+        } else {
+          var button = document.createElement("input");
+          button.type = "button";
+          button.value = "로그인";
+          button.onclick = function () {
+            location.href = "/login";
+          };
+
+          var container = document.getElementById("container");
+          container.appendChild(button);
+        }
+      })();
+    </script>
+  </body>
+</html>
+
+<!--
+  동적 생성 시, innerHTML 사용하는 것이 더 간결한 코드
+-->

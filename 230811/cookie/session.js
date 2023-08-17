@@ -3,6 +3,11 @@ const session = require("express-session");
 const app = express();
 const PORT = 8000;
 
+app.set("view engine", "ejs");
+app.set("views", "./views");
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 // session 옵션 객체
 // httpOnly : 값을 true로 하면 사용자가 자바스크립트를 통해서 세션을 사용할 수 없도록 함
 // secure : 값을 true로 하면 https에서만 세션을 주고받음
@@ -16,11 +21,46 @@ app.use(
     saveUninitialized: true,
   })
 );
+
+const userInfo = { id: "kdt8", pw: "1234" };
+
 app.get("/", (req, res) => {
-  // 세션 설정
-  req.session.name = "홍길동";
-  res.send("세션 설정 완료");
+  const user = req.session.user;
+  if (user === undefined) {
+    res.render("index2", { isLogin: false });
+  } else {
+    res.render("index2", { isLogin: true, user: user });
+  }
 });
+
+// app.get("/", (req, res) => {
+//   req.session.name = "홍길동";
+//   res.send("세션 설정 완료");
+// });
+
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
+app.post("/login", (req, res) => {
+  console.log("a");
+  console.log(req.body);
+  if (userInfo.id === req.body.id && userInfo.pw === req.body.id) {
+    req.session.user = req.body.id;
+    req.redirect("/");
+  } else {
+    res.send(
+      `<script>alert('로그인 실패'); document.locatioin.href="/"; </script>`
+    );
+  }
+});
+
+app.get("/logout", (req, res) => {
+  req.session.destroy(() => {
+    res.redirect("/");
+  });
+});
+
 app.get("/destroy", (req, res) => {
   req.session.destroy(() => {
     res.redirect("/");
@@ -31,4 +71,6 @@ app.get("/name", (req, res) => {
   res.send(req.session.name);
 });
 
-app.listen(PORT);
+app.listen(PORT, () => {
+  console.log(`http://localhost:${PORT}`);
+});

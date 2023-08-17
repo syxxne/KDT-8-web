@@ -6,10 +6,10 @@ const PORT = 8000;
 app.set("view engine", "ejs");
 
 // 일반 cookie
-// app.use(cookieParser());
+app.use(cookieParser());
 
 // 암호화된 cookie abcdef 값으로 암호화를 할 것임
-app.use(cookieParser("abcdef"));
+// app.use(cookieParser("abcdef"));
 
 // cookie 옵션 객체
 const cookieConfig = {
@@ -23,21 +23,27 @@ const cookieConfig = {
   // signed : 쿠키의 암호화 결정(req.signedCookies 객체에 들어있음)
   httpOnly: true,
   maxAge: 60 * 1000, //1분
-  signed: true,
+  // signed: true,
 };
 
 app.get("/", (req, res) => {
-  res.cookie("myCookie", "myValue", cookieConfig);
-  res.render("index");
+  console.log(req.cookies.myCookie);
+  res.render("index", { data: req.cookies.myCookie });
 });
 
-app.get("/setCookie", (req, res) => {
-  // 쿠키 이름, 쿠키값, 옵션 객체
+app.post("/setCookie", (req, res) => {
+  res.cookie("myCookie", "myValue", cookieConfig);
   res.send("set cookie");
 });
 
+// app.get("/setCookie", (req, res) => {
+//   res.cookie("myCookie", "myValue", cookieConfig);
+//   res.send("set cookie");
+// });
+
 app.get("/getCookie", (req, res) => {
-  res.send(req.signedCookies);
+  // 쿠키 이름, 쿠키값, 옵션 객체
+  res.send(req.cookies);
 });
 
 app.get("/clearCookie", (req, res) => {

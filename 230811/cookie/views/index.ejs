@@ -68,14 +68,26 @@
       </div>
     </div>
     <script>
-      $(function () {
+      // $(function () {
+      //   axios({
+      //     method: "POST",
+      //     url: "/",
+      //   }).then((res) => {
+      //     console.log("a");
+      //     console.log(res);
+      //   });
+      //   $("#modal").modal("show");
+      // });
+
+      console.log("<%= data %>");
+      if ("<%= data %>" === "") {
         $("#modal").modal("show");
-      });
+      }
 
       function notShow() {
         axios({
-          method: "GET",
-          url: "/",
+          method: "POST",
+          url: "/setCookie",
         }).then((res) => {
           console.log(res);
         });
