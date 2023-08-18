@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script>
+      (async function () {
+        const token = localStorage.getItem("id");
+        const container = document.querySelector("#container");
+        let data = "";
+
+        if (!token) {
+          data =
+            "<button type='button' onclick='signup()'>회원가입</button><br /><button type='button' onclick='signin()'>로그인</button><br />";
+        } else {
+          const res = await axios({
+            method: "POST",
+            url: "/verify",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (res.data.result) {
+            data = `<p>${res.data.user.userid}님 환영합니다.</p><br /><button type='button' onclick='signout()'>로그아웃</button><br />`;
+          }
+        }
+
+        container.innerHTML = data;
+      })();
+
+      function signup() {
+        location.href = "/signup";
+      }
+
+      function signin() {
+        location.href = "/signin";
+      }
+
+      function signout() {
+        localStorage.clear();
+        location.href = "/";
+      }
+    </script>
+  </body>
+</html>
