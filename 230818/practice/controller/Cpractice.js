@@ -42,10 +42,10 @@ exports.signin = async (req, res) => {
         userid,
       },
     });
-    const compare = comparePassword(pw, user[0].pw);
+    const compare = comparePassword(pw, user.pw);
     const token = jwt.sign({ userid }, SECREAT);
     console.log(token);
-    res.send({ result: compare, user: user[0], token });
+    res.send({ result: compare, user: user, token });
   } catch (error) {
     console.log(error);
   }
