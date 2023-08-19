@@ -36,10 +36,10 @@ exports.getSignin = (req, res) => {
 exports.signin = async (req, res) => {
   try {
     const { userid, pw } = req.body;
-    const user = await User.findAll({
+    const user = await User.findOne({
       attributes: ["name", "userid", "pw"],
       where: {
-        userid: req.body.userid,
+        userid,
       },
     });
     const compare = comparePassword(pw, user[0].pw);
