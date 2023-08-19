@@ -72,6 +72,10 @@ exports.verify = (req, res) => {
   }
 };
 
+exports.getViewInfo = (req, res) => {
+  res.render("info");
+};
+
 const salt = 10;
 
 const bcryptPassword = (password) => {

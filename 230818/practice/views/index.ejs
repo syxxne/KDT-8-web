@@ -7,32 +7,24 @@
     <title>Document</title>
   </head>
   <body>
-    <div id="container"></div>
+    <div id="container">
+      <button type="button" onclick="signup()">회원가입</button><br />
+      <button type="button" onclick="signin()">로그인</button><br />
+    </div>
     <script>
-      (async function () {
-        const token = localStorage.getItem("id");
-        const container = document.querySelector("#container");
-        let data = "";
+      const token = localStorage.getItem("id");
+      const container = document.getElementById("container");
 
-        if (!token) {
-          data =
-            "<button type='button' onclick='signup()'>회원가입</button><br /><button type='button' onclick='signin()'>로그인</button><br />";
-        } else {
-          const res = await axios({
-            method: "POST",
-            url: "/verify",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+      if (token != null) {
+        var button = document.createElement("input");
+        button.type = "button";
+        button.value = "회원정보";
+        button.onclick = function viewInfo() {
+          location.href = "/viewInfo";
+        };
+      }
 
-          if (res.data.result) {
-            data = `<p>${res.data.user.userid}님 환영합니다.</p><br /><button type='button' onclick='signout()'>로그아웃</button><br />`;
-          }
-        }
-
-        container.innerHTML = data;
-      })();
+      container.appendChild(button);
 
       function signup() {
         location.href = "/signup";
@@ -40,11 +32,6 @@
 
       function signin() {
         location.href = "/signin";
-      }
-
-      function signout() {
-        localStorage.clear();
-        location.href = "/";
       }
     </script>
   </body>
