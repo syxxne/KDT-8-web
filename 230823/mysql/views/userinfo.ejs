@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" id="userid" readonly /><br />
+    <input type="password" id="pw" /><br />
+    <input type="text" id="name" /><br />
+    <button type="button" onclick="modifyInfo()">수정하기</button><br />
+    <a href="/">홈으로 이동</a>
+    <script>
+      (() => {
+        document.getElementById("userid").value =
+          localStorage.getItem("userid");
+        document.getElementById("pw").value = localStorage.getItem("pw");
+        document.getElementById("name").value = localStorage.getItem("name");
+      })();
+
+      async function modifyInfo() {
+        const res = await axios({
+          method: "PATCH",
+          url: "/userinfo",
+          data: {
+            userid: document.getElementById("userid").value,
+            pw: document.getElementById("pw").value,
+            name: document.getElementById("name").value,
+          },
+        });
+
+        if (res.data.result) {
+          localStorage.setItem(
+            "userid",
+            document.getElementById("userid").value
+          );
+          localStorage.setItem("pw", document.getElementById("pw").value);
+          localStorage.setItem("name", document.getElementById("name").value);
+          alert("수정 완료");
+        } else {
+          alert("수정 실패");
+        }
+
+        location.reload();
+      }
+    </script>
+  </body>
+</html>
