@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" id="id" placeholder="아이디" /><br />
+    <input type="text" id="name" placeholder="이름" /><br />
+    <input type="text" id="gender" placeholder="성별" /><br />
+    <input type="text" id="dept" placeholder="학과" /><br />
+    <button type="button" onClick="register()">추가</button><br />
+    <a href="/">홈으로 이동</a><br />
+    <a href="/students">학생 목록</a>
+    <script>
+      async function register() {
+        const res = await axios({
+          method: "POST",
+          url: "/addStudent",
+          data: {
+            id: Number(document.getElementById("id").value),
+            name: document.getElementById("name").value,
+            gender: document.getElementById("gender").value,
+            dept: document.getElementById("dept").value,
+          },
+        });
+
+        if (res.data.result) {
+          alert("회원 추가 완료!");
+          location.href = "/students";
+        } else {
+          alert("회원 추가 실패ㅠㅠ");
+          location.reload();
+        }
+      }
+    </script>
+  </body>
+</html>
