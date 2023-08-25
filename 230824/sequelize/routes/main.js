@@ -22,6 +22,8 @@ router.patch("/profile/edit", controller.edit_profile);
 // 삭제
 router.delete("/profile/delete", controller.delete_profile);
 
+router.get("/userlist", controller.userList);
+
 //회원 구매목록
 router.get("/profile/buy", controller.buy);
 
