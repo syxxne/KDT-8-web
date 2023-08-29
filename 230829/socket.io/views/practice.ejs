@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/socket.io/socket.io.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Hello World!</h1>
+    <button onclick="buttonClick('hello')">hello</button>
+    <button onclick="buttonClick('study')">study</button>
+    <button onclick="buttonClick('bye')">bye</button><br />
+    <h3></h3>
+    <script>
+      const socket = io();
+
+      function buttonClick(type) {
+        // socket.emit("new_message", type, (res) => {
+        //   const h3 = document.querySelector("h3");
+        //   h3.textContent = `${res.type}: ${res.message}`;
+        // });
+        socket.emit("new_message", type);
+        socket.on("cb", (res) => {
+          const h3 = document.querySelector("h3");
+          h3.textContent = `${res.type}: ${res.message}`;
+        });
+      }
+    </script>
+  </body>
+</html>

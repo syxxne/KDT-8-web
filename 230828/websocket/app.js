@@ -34,6 +34,7 @@ wss.on("connection", (socket) => {
 
     // 클라이언트로 응답 메시지 전송
     // socket.send(`서버 메시지: ${message}`);
+    // wss.clients.forEach도 가능
     sockets.forEach((element) => {
       element.send(`${message.user} : ${message.msg}`);
     });

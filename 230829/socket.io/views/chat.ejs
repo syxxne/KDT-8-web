@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/socket.io/socket.io.js"></script>
+    <title>Document</title>
+    <style>
+      #space {
+        background-color: skyblue;
+        width: 300px;
+        height: 550px;
+      }
+
+      #myChat {
+        background-color: yellow;
+        text-align: right;
+        float: right;
+        display: inline-block;
+        position: relative;
+        max-width: 200px;
+        margin: 20px 10px 20px 10px;
+      }
+
+      #yourChat {
+        background-color: white;
+        text-align: left;
+        float: left;
+        display: inline-block;
+        position: relative;
+        max-width: 200px;
+        margin: 20px 10px 20px 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="space"></div>
+    <form id="chat">
+      <input type="text" id="message" placeholder="채팅 내용" />
+      <button>채팅</button>
+    </form>
+
+    <script>
+      const chatForm = document.querySelector("#chat");
+      const space = document.querySelector("#space");
+
+      const socket = io();
+      const chatroom = prompt("채팅방을 입력하세요:");
+
+      socket.emit("join", chatroom);
+
+      socket.on("userjoin", (message) => {
+        console.log(message);
+      });
+
+      socket.on("chat", (message) => {
+        const yourChat = document.createElement("div");
+        yourChat.id = "yourChat";
+        yourChat.textContent = message;
+
+        space.appendChild(yourChat);
+
+        const br = document.createElement("br");
+        space.appendChild(br);
+      });
+
+      chatForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const msg = chatForm.querySelector("#message").value;
+
+        const myChat = document.createElement("div");
+        myChat.id = "myChat";
+        myChat.textContent = msg;
+
+        space.appendChild(myChat);
+
+        const br = document.createElement("br");
+        space.appendChild(br);
+
+        socket.emit("message", msg);
+
+        msg.value = "";
+      });
+    </script>
+  </body>
+</html>
