@@ -1,0 +1,118 @@
+// scss 파일명 앞에 _를 붙여서 작성하면, 파일 단위로 분리되어 컴파일되지 않음 (_utils는 컴파일 X, 변수들을 해당 파일에 넣음)
+// 불필요한 컴파일을 줄임
+
+$color-red: #ff6060;
+$color-orange: rgb(255, 201, 102);
+$color-yellow: yellow;
+$color-green: green;
+$color-blue: blue;
+$color-navy: navy;
+$color-purple: purple;
+$color-pink: pink;
+
+$circle1: 100px;
+
+@mixin box($size) {
+  width: $size;
+  height: $size;
+}
+
+@mixin circle($size) {
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+}
+
+@mixin rotate($name, $size) {
+  @keyframes #{$name} {
+    0%,
+    100% {
+      top: 0;
+      left: 0;
+    }
+    25% {
+      top: 0;
+      left: $size;
+    }
+    50% {
+      top: $size;
+      left: $size;
+    }
+    75% {
+      top: $size;
+      left: 0;
+    }
+  }
+}
+
+// @mixin animation($delay, $duration, $name) {
+//   animation-delay: $delay;
+//   animation-duration: $duration;
+//   animation-name: $name;
+// }
+
+// @mixin keyframe($animation-name) {
+//   @keyframes #{$animation-name} {
+//     @content;
+//   }
+// }
+
+// @include keyframe(rotate1) {
+//   0%,
+//   100% {
+//     margin-top: 0;
+//     margin-left: 0;
+//   }
+//   25% {
+//     margin-top: 0;
+//     margin-left: 100px;
+//   }
+//   50% {
+//     margin-top: 100px;
+//     margin-left: 100px;
+//   }
+//   75% {
+//     margin-top: 100px;
+//     margin-left: 0;
+//   }
+// }
+
+// @include keyframe(rotate2) {
+//   0%,
+//   100% {
+//     margin-top: 0;
+//     margin-left: 0;
+//   }
+//   25% {
+//     margin-top: 0;
+//     margin-left: 150px;
+//   }
+//   50% {
+//     margin-top: 150px;
+//     margin-left: 150px;
+//   }
+//   75% {
+//     margin-top: 150px;
+//     margin-left: 0;
+//   }
+// }
+
+// @include keyframe(rotate3) {
+//   0%,
+//   100% {
+//     margin-top: 0;
+//     margin-left: 0;
+//   }
+//   25% {
+//     margin-top: 0;
+//     margin-left: 200px;
+//   }
+//   50% {
+//     margin-top: 200px;
+//     margin-left: 200px;
+//   }
+//   75% {
+//     margin-top: 200px;
+//     margin-left: 0;
+//   }
+// }
